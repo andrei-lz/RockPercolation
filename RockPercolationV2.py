@@ -28,18 +28,15 @@ Created on Thu Feb 13 20:23:33 2020
 ## drop reaches the bottom layer.
 
 import numpy as np 
-import matplotlib.pyplot as plt
-import time, sys
-from PercolationGUI import Frame
+import matplotlib.pyplot as plt 
 #import matplotlib.animation as animation 
 
 ## The density of rocks in the sand.
-#p = 1 - 0.599
-#p = .5
+# p = 1 - 0.599
 
 ## The number of simulation replications.
 nrep_list = [1e2, 5e2, 1e3, 2e3, 4e3]
-nrep = 5e2
+nrep = 1e3
 
 ## The total depth across the simulation replications.
 TD = 0
@@ -49,30 +46,28 @@ NB = 0
 
 # Grid size
 N_list = [10, 50, 100, 200, 400]
-N = 100
+N = 400
 
 nb_list = []
 td_list = []
-display_matrices = []
+
 x = np.arange(0, 1, 0.01)
 
 for p in np.arange(0, 1, 0.01):
     NB = 0
     TD = 0
     ## Simulation replications.
-    for icd in range(int(nrep)):
+    for i in range(int(nrep)):
         ## Randomly lay out the rocks.
         M = (1*(np.random.uniform(0,1,size=N*N) < p)).reshape(N,N)
         ## The initial position of the droplet.
         r = 0
         c = int(N/2) -1
-        M[r, c] = 2
         ## Let the droplet percolate through the rocks.
-        while r < N-1 and c < N-1: 
+        while r < N-1 and c < N-1:
             ## Always go straight down if possible.
             if (M[r+1,c] == 0): 
-                r = r+1
-                M[r, c] = 2
+                r = r+1        
             ## Next try down/left.
             elif ( (c>1) & (M[r+1,c-1] == 0) ) :
                 r = r+1
@@ -86,11 +81,7 @@ for p in np.arange(0, 1, 0.01):
                 c = c+1        
             ## We're stuck
             else: 
-                break
-            M[r, c] = 2
-
-        display_matrices.append(M)
-        
+                break 
         ## Keep track of how often we reach the bottom. 
         if (r==N-1) :
             NB = NB + 1 
@@ -109,9 +100,6 @@ for p in np.arange(0, 1, 0.01):
 print("Reached Depth:", TD)
 print("Probability of Reaching the Bottom:", NB)
 
-ynb_list = np.array(nb_list)
-td_list = np.array(td_list)
-
 plt.plot(x, nb_list)
 plt.title("Graph Showing the Probability of Complete Percolation for Given Densities of Rock", fontSize=18)
 plt.ylabel("Probability of Reaching the Bottom")
@@ -119,15 +107,3 @@ plt.xlabel("Density")
 save_title = "n" + str(N) + "nrep" + str(nrep) +".png"
 plt.savefig(save_title, bbox_inches="tight")
 plt.close()
-
-# nb_list = []
-# td_list = []
-
-# f = Frame(display_matrices)
-
-# while True:
-#     f.update()
-
-
-
-
