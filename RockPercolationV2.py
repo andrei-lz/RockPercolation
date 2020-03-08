@@ -35,8 +35,8 @@ import matplotlib.pyplot as plt
 # p = 1 - 0.599
 
 ## The number of simulation replications.
-nrep_list = [1e2, 5e2, 1e3, 2e3, 4e3]
-nrep = 1e3
+# nrep_list = [100, 500, 1000, 2000, 4000]
+nrep = 4e3
 
 ## The total depth across the simulation replications.
 TD = 0
