@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Feb 13 20:23:33 2020
-
-@author: jbru
-"""
 ## Simulate a drop of liquid percolating down through a mixture of
 ## sand and rock.
 ##
